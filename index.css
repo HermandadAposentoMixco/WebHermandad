@@ -1,0 +1,525 @@
+/* ===== GENERAL ===== */
+html, body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    color: white;
+    background-color: black;
+    overflow-x: hidden;
+}
+
+/* ===== HEADER ===== */
+.header {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    padding: 15px 20px;
+    background-color: #000;
+    position: relative;
+    z-index: 100;
+    gap: 10px;
+}
+
+.imgEscudo {
+    width: 150px;
+    height: auto;
+    justify-self: start;
+}
+
+.menu {
+    font-size: 2.2rem;
+    cursor: pointer;
+    justify-self: end;
+}
+
+/* ===== MENU LATERAL (OFF-CANVAS) ===== */
+.navMenu {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 280px;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.97);
+    padding: 40px 20px;
+    box-shadow: -5px 0 25px rgba(0, 0, 0, 0.7);
+    display: flex;
+    flex-direction: column;
+    transition: right 0.4s ease;
+    z-index: 200;
+}
+
+.navMenu.active {
+    right: 0;
+}
+
+.navMenu .closeBtn {
+    align-self: flex-end;
+    font-size: 2rem;
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+
+.navMenu ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    text-align: center;
+}
+
+.navMenu a {
+    color: white;
+    text-decoration: none;
+    font-size: 1.2rem;
+    transition: all 0.3s;
+}
+
+.navMenu a:hover {
+    color: #ffcc00;
+}
+
+/* ===== SLIDER ===== */
+.sliderContainer {
+    position: relative;
+    width: 95%;
+    max-width: 1200px;
+    margin: 20px auto;
+    overflow: hidden;
+    border-radius: 15px;
+    box-shadow: 0 0 15px rgba(255,255,255,0.1);
+}
+
+.slide {
+    display: none;
+    width: 100%;
+}
+
+.slide img {
+    width: 100%;
+    height: 500px;
+    object-fit: cover;
+    border-radius: 15px;
+    transition: transform 0.3s ease;
+}
+
+.slide img:hover {
+    transform: scale(1.05);
+}
+
+/* ===== BOTONES SLIDER ===== */
+.prev, .next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0,0,0,0.6);
+    border: none;
+    color: white;
+    font-size: 2rem;
+    padding: 10px 15px;
+    cursor: pointer;
+    border-radius: 50%;
+    z-index: 10;
+    transition: background 0.3s ease;
+}
+
+.prev:hover, .next:hover {
+    background-color: rgba(255,255,255,0.2);
+}
+
+.prev { left: 10px; }
+.next { right: 10px; }
+
+/* ===== MARCHAS OFICIALES ===== */
+.marchas-oficiales {
+    background-color: #ffffff;
+    color: #111;
+    text-align: center;
+    padding: 60px 20px;
+  }
+  
+  .titulo-marchas {
+    font-size: 2em;
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+  
+  .decoracion {
+    width: 60px;
+    height: 3px;
+    background-color: gold;
+    margin: 0 auto 30px auto;
+    position: relative;
+  }
+  
+  .decoracion::after {
+    content: "";
+    position: absolute;
+    bottom: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 2px;
+    background-color: gold;
+  }
+  
+  .descripcion-marchas {
+    max-width: 700px;
+    margin: 0 auto 40px auto;
+    color: #777;
+    line-height: 1.6;
+    font-size: 1rem;
+  }
+  
+  .marcha {
+    margin-bottom: 50px;
+  }
+  
+  .marcha h3 {
+    font-weight: bold;
+    font-size: 1.2rem;
+    margin-bottom: 8px;
+  }
+  
+  .marcha .subtitulo {
+    font-size: 1rem;
+    margin-bottom: 15px;
+    font-weight: 500;
+  }
+  
+  .marchas-oficiales audio {
+    width: 280px;
+    background-color: black;
+    border-radius: 4px;
+  }
+  
+  /* ===== REDES SOCIALES ===== */
+.redesSociales {
+    background-color: #000000;
+    color: white;
+    text-align: center;
+    padding: 15px 20px;
+  }
+  
+  .redesSociales .titulo {
+    font-size: 2em;
+    margin-bottom: 30px;
+    font-weight: 600;
+  }
+  
+  .iconos-redes {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 40px;
+  }
+  
+  .red {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+  }
+  
+  .red img {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+    border-radius: 50%;
+    padding: 10px;
+    background-color: #fff;
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+  }
+  
+  .red span {
+    margin-top: 10px;
+    font-size: 1rem;
+    color: white;
+    font-weight: 500;
+  }
+  
+  /* Efectos al pasar el cursor */
+  .red:hover img {
+    transform: scale(1.1);
+    box-shadow: 0 0 15px gold;
+  }
+  
+  .red:hover span {
+    color: gold;
+  }
+  
+  .red:hover {
+    transform: translateY(-5px);
+  }
+  
+  /* Colores personalizados para cada red */
+  .facebook img {
+    background-color: #3b5998;
+  }
+  
+  .whatsapp img {
+    background-color: #25d366;
+  }
+  
+  .instagram img {
+    background: radial-gradient(circle at 30% 30%, #f58529, #dd2a7b, #8134af, #515bd4);
+  }
+  
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 768px) {
+    .iconos-redes {
+      gap: 25px;
+    }
+  
+    .red img {
+      width: 55px;
+      height: 55px;
+    }
+  
+    .redesSociales .titulo {
+      font-size: 1.6em;
+    }
+  }
+  
+.Calendario{
+    width: 100%;
+    height: 35rem;
+    border: 1px solid white;
+    background-color: rgb(199, 196, 196);
+    color: black;
+    font-size: 1.4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.Ubicacion{
+    width: 100%;
+    height: 30rem;
+    border: 1px solid rgb(0, 0, 0);
+    background-color: rgb(0, 0, 0);
+    color: white;
+    text-align: center;
+    padding: 30px 10px;
+}
+.descripcion1 {
+    max-width: 600px;
+    margin: 0 auto 10px;
+    font-size: 15px;
+    color: #9c9c9c;
+    text-align: center;
+  }
+
+/* ===== FOOTER ===== */
+.footer {
+    text-align: center;
+    padding: 15px;
+    border-radius: 15px 15px 0 0;
+    background-color: black;
+    font-size: 0.95rem;
+}
+
+/* ===== RESPONSIVE DESIGN ===== */
+
+/* Teléfonos */
+@media (max-width: 600px) {
+    .header {
+        grid-template-columns: 1fr auto;
+        padding: 10px 15px;
+    }
+
+    .imgEscudo {
+        width: 170px;
+    }
+
+    .menu {
+        font-size: 2.8rem;
+    }
+
+    .navMenu {
+        width: 35%;
+        padding: 30px 15px;
+    }
+
+    .navMenu a {
+        font-size: 1rem;
+    }
+
+    .slide img {
+        height: 190px;
+        border-radius: 10px;
+    }
+
+    .prev, .next {
+        font-size: 1.5rem;
+        padding: 8px 10px;
+    }
+
+    .footer {
+        font-size: 0.85rem;
+    }
+}
+
+/* Tablets (iPad) */
+@media (min-width: 601px) and (max-width: 1024px) {
+    .imgEscudo {
+        width: 140px;
+    }
+
+    .menu {
+        font-size: 2rem;
+    }
+
+    .slide img {
+        height: 350px;
+    }
+
+    .sliderContainer {
+        width: 90%;
+    }
+}
+
+/* Computadoras grandes */
+@media (min-width: 1025px) {
+    .imgEscudo {
+        width: 200px;
+    }
+
+    .slide img {
+        height: 500px;
+    }
+}
+    /* ======== CALENDARIO ======== */
+    .calendario-container {
+      background: #e6e6e6;
+      padding: 30px 10px;
+      text-align: center;
+      color: #000;
+      font-family: "Arial", sans-serif;
+    }
+
+    .calendario-container .titulo {
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .linea {
+      width: 80px;
+      height: 3px;
+      background: gold;
+      margin: 0 auto 15px;
+    }
+
+    .descripcion {
+      max-width: 600px;
+      margin: 0 auto 10px;
+      font-size: 15px;
+      color: #444;
+    }
+
+    .ver-actividades {
+      display: inline-block;
+      margin-bottom: 25px;
+      font-weight: 600;
+      text-decoration: none;
+      color: #000;
+      transition: 0.3s;
+    }
+
+    .ver-actividades:hover {
+      color: gold;
+    }
+
+    .encabezado-mes {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 15px;
+    }
+
+    .btn-hoy, .btn-prev, .btn-next {
+      background: gold;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 5px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .btn-hoy:hover, .btn-prev:hover, .btn-next:hover {
+      background: #caa800;
+    }
+
+    .mes h2 {
+      margin: 0;
+      font-size: 22px;
+    }
+
+    .calendario {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 5px;
+      justify-items: center;
+      max-width: 650px;
+      margin: 0 auto;
+    }
+
+    .dia {
+      width: 100%;
+      padding: 10px 0;
+      border: 1px solid #999;
+      border-radius: 6px;
+      font-size: 14px;
+    }
+
+    .encabezado {
+      background: #000;
+      color: #fff;
+      font-weight: 600;
+    }
+
+    .hoy {
+      background: #fff9cc;
+      border: 2px solid gold;
+    }
+
+    .mes {
+      display: none;
+      animation: fadeIn 0.4s ease-in-out;
+    }
+
+    .mes.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from {opacity: 0;}
+      to {opacity: 1;}
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
+      .calendario {
+        max-width: 100%;
+        font-size: 13px;
+      }
+      .dia { padding: 8px 0; }
+      .titulo { font-size: 24px; }
+    }
+
+    @media (max-width: 480px) {
+      .encabezado-mes { flex-direction: column; gap: 8px; }
+      .btn-prev, .btn-next { padding: 5px 10px; }
+      .titulo { font-size: 22px; }
+    }
+     
+      .diseñogold{
+        width: 100%;
+      height: 6px;
+      background: linear-gradient(to right, transparent, gold, transparent);
+      margin: 50px 0;
+      box-shadow: 0 0 20px gold;
+      }

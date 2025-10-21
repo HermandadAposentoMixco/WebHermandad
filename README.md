@@ -1,2 +1,2 @@
 # WebHermandad
-Aplicación para la hermandad Aposento Mixco
+página web: https://aandreeemele.github.io/WebHermandad/

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hermandad Jesús del Aposento - Parroquia Santo Domingo</title>
+  <link rel="stylesheet" href="../../index.css">
+  <style>
+    /* ===== GENERAL ===== */
+    .menu {
+      color: gold;
+    }
+    /* ===== SECCIÓN PARROQUIA ===== */
+    .parroquia {
+      text-align: center;
+      padding: 0px 25px;
+      max-width: 900px;
+      margin: auto;
+      animation: fadeIn 1s ease forwards;
+      opacity: 0;
+    }
+
+    .titulo {
+      color: gold;
+      font-size: 36px;
+      margin-bottom: 25px;
+      text-shadow: 0 0 15px rgba(255, 215, 0, 0.6);
+      border-bottom: 2px solid gold;
+      display: inline-block;
+      padding-bottom: 10px;
+      text-transform: uppercase;
+      animation: slideDown 1s ease forwards;
+      opacity: 0;
+    }
+
+    .descripcion {
+      color: #f0f0f0;
+      line-height: 1.8;
+      text-align: justify;
+      background: linear-gradient(180deg, #111, #000);
+      border-radius: 20px;
+      padding: 30px;
+      box-shadow: 0 0 35px rgba(255, 215, 0, 0.4);
+      margin-top: 25px;
+      animation: fadeIn 1.5s ease forwards;
+      opacity: 0;
+    }
+
+    .imgParro {
+      width: 100%;
+      max-width: 650px;
+      border-radius: 20px;
+      margin-top: 30px;
+      box-shadow: 0 0 40px rgba(255, 215, 0, 0.5);
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+      cursor: pointer;
+      opacity: 0;
+      animation: fadeIn 2s ease forwards;
+    }
+
+    .imgParro:hover {
+      transform: scale(1.05) rotate(-0.5deg);
+      box-shadow: 0 0 50px rgba(255, 215, 0, 0.7);
+    }
+
+    .diseñogold {
+      width: 100%;
+      height: 6px;
+      background: linear-gradient(to right, transparent, gold, transparent);
+      margin: 50px 0;
+      box-shadow: 0 0 20px gold;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 15px;
+      color: #ccc;
+      font-size: 14px;
+      border-top: 1px solid gold;
+      background-color: #111;
+    }
+
+    /* ===== ANIMACIONES ===== */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(15px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
+      .titulo {
+        font-size: 28px;
+      }
+      .descripcion {
+        font-size: 15px;
+        padding: 20px;
+      }
+      .imgParro {
+        width: 95%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <img src="../../assets/escudo.png" alt="Escudo" class="imgEscudo">
+    <div class="menu" id="menuBtn">☰</div>
+
+    <nav class="navMenu" id="navMenu">
+      <div class="closeBtn" id="closeBtn">×</div>
+      <ul>
+        <li><a href="../../index.html">Inicio</a></li>
+        <li><a href="#">Historia</a></li>
+        <li><a href="../agenda/agenda.html">Imágenes</a></li>
+        <li><a href="../devotos/devotos.html">Devotos</a></li>
+        <li><a href="../iniciar/iniciar.html">Comprar turno</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="parroquia">
+    <h1 class="titulo">Parroquia Santo Domingo de Guzmán</h1>
+    <p class="descripcion">
+      La Parroquia Santo Domingo de Guzmán, ubicada en el corazón del casco histórico de Mixco, zona 1, es uno de los templos más antiguos y emblemáticos del municipio. Su origen se remonta aproximadamente al año 1535, cuando los frailes dominicos establecieron en la región una sede para evangelizar a las comunidades indígenas tras la conquista española. <br><br>
+      Con el paso del tiempo, el templo se convirtió en un centro espiritual, cultural y social para los habitantes de Mixco. Su arquitectura colonial, de estilo sobrio y tradicional, ha sufrido diversas reconstrucciones y restauraciones a causa de los terremotos que han afectado Guatemala, pero siempre ha conservado su esencia y su función como punto de encuentro de la fe católica. <br><br>
+      La parroquia alberga valiosas imágenes religiosas, entre ellas la de Santo Domingo de Guzmán, su santo patrono, cuya festividad se celebra cada 4 de agosto con procesiones, novenas, misas solemnes y actividades que reflejan la profunda devoción del pueblo mixqueño. Durante estas celebraciones, las cofradías y hermandades locales tienen una participación destacada, manteniendo vivas las tradiciones heredadas desde la época colonial. <br><br>
+      Hoy en día, la Parroquia Santo Domingo de Guzmán continúa siendo un símbolo de fe y tradición, no solo por su antigüedad e historia, sino por su papel activo en la vida religiosa y comunitaria de Mixco.
+    </p>
+    <img src="../../assets/parroquia.jpeg" alt="Parroquia Santo Domingo de Guzmán" class="imgParro">
+  </section>
+
+  <div class="diseñogold"></div>
+
+  <footer class="footer">
+    <p>Hermandad Jesús del Aposento © 2025</p>
+  </footer>
+
+  <script>
+    // ===== MENÚ =====
+    const menuBtn = document.getElementById("menuBtn");
+    const navMenu = document.getElementById("navMenu");
+    const closeBtn = document.getElementById("closeBtn");
+
+    menuBtn.addEventListener("click", () => navMenu.classList.add("active"));
+    closeBtn.addEventListener("click", () => navMenu.classList.remove("active"));
+    document.addEventListener("click", (e) => {
+      if (!navMenu.contains(e.target) && !menuBtn.contains(e.target)) {
+        navMenu.classList.remove("active");
+      }
+    });
+  </script>
+</body>
+</html>

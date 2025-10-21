@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="index.css">
+  <title>Hermandad Jesús del Aposento</title>
+</head>
+<body>
+  <header class="header">
+    <img src="./assets/escudo.png" alt="Escudo" class="imgEscudo">    
+    <div class="menu" id="menuBtn">☰</div>
+
+    <!-- Menú lateral -->
+    <nav class="navMenu" id="navMenu">
+      <div class="closeBtn" id="closeBtn">×</div>
+      <ul>
+        <li><a href="#">Inicio</a></li>
+        <li><a href="./dashboard/activities/activities.html">Historia</a></li>
+        <li><a href="./dashboard/agenda/agenda.html">Imágenes</a></li>
+        <li><a href="./dashboard/devotos/devotos.html">Devotos</a></li>
+        <li><a href="./dashboard/iniciar/iniciar.html">Comprar turno</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <div class="sliderContainer">
+      <div class="slide"><img src="./assets/señorSepultado.jpeg" alt="Imagen 1"></div>
+      <div class="slide"><img src="./assets/Aposento.jpeg" alt="Imagen 2"></div>
+      <div class="slide"><img src="./assets/SeñorSepultado1.jpeg" alt="Imagen 3"></div>
+      <div class="slide"><img src="./assets/aposento2.jpeg" alt="Imagen 4"></div>
+      <button class="prev">&#10094;</button>
+      <button class="next">&#10095;</button>
+    </div>
+  </main>
+
+  <!-- ===== MARCHAS OFICIALES ===== -->
+<section class="marchas-oficiales">
+    <h2 class="titulo-marchas">Marchas oficiales</h2>
+    <div class="decoracion"></div>
+    <p class="descripcion-marchas">
+      Dentro del pentagrama de Marchas Fúnebres que engalana nuestros cortejos procesionales
+      no pueden faltar las marchas que se constituyen como oficiales de nuestras consagradas imágenes.
+    </p>
+  
+    <div class="marcha">
+      <h3>“JESUS DEL APOSENTO” — <em>de</em> Alberto Velásquez </h3>
+      <p class="subtitulo">Marcha Oficial — “ Jesus del Aposento “</p>
+      <audio controls>
+        <source src="./assets/cruzpesada.mp3" type="audio/mpeg">
+        Tu navegador no soporta el elemento de audio.
+      </audio>
+    </div>
+  
+    <div class="marcha">
+      <h3>“SEÑOR SEPULTADO DE MIXCO” — <em>de</em> Karol Von Lattan</h3>
+      <p class="subtitulo">Marcha Oficial — “ Señor Sepultado“</p>
+      <audio controls>
+        <source src="./assets/dolorconsuelo.mp3" type="audio/mpeg">
+        Tu navegador no soporta el elemento de audio.
+      </audio>
+    </div>
+  </section>
+  
+
+  <!-- ===== CALENDARIO ===== -->
+  <section class="calendario-container">
+    <h1 class="titulo">Agenda Mensual</h1>
+    <div class="linea"></div>
+    <p class="descripcion">
+      Programa mensual de actividades programadas de la Hermandad Jesús del Aposento y Señor Sepultado.  
+      Para ver más detalle dé click sobre la actividad de su interés.
+    </p>
+
+    <a href="#" class="ver-actividades">Ver todas las actividades →</a>
+
+    <div class="encabezado-mes">
+      <h2 id="nombreMes">Noviembre 2025</h2>
+    </div>
+
+    <div id="contenedorMeses"></div>
+  </section>
+
+  <div class="Ubicacion">
+    <h1 class="titulo">Ubicacion</h1>
+    <p class="descripcion1">📌Estamos ubicados <br>
+        3 calle 4-49 "A" zona de mixco - Sede de la Hermandad <br> <br>
+        
+        🕘 Horario de Atencion <br> <br>
+        
+
+        <div class="redesSociales">
+            <h1 class="titulo">Redes Sociales</h1>
+          
+            <div class="iconos-redes">
+              <a href="https://www.facebook.com/jesusdelaposento/?locale=es_LA" target="_blank" class="red facebook">
+                <img src="./assets/image.png" alt="Facebook">
+              </a>
+          
+              <a href="https://wa.me/50200000000" target="_blank" class="red whatsapp">
+                <img src="./assets/image copy.png" alt="WhatsApp">
+              </a>
+          
+              <a href="https://www.instagram.com/jesusdelaposentoyssoficial/" target="_blank" class="red instagram">
+                <img src="./assets/image copy 2.png" alt="Instagram">
+              </a>
+            </div>
+          </div>
+          
+          
+  </div>
+  <div class="diseñogold"></div>
+  <footer class="footer">
+    <p>Hermandad Jesús del Aposento © 2025</p>
+  </footer>
+
+  <script>
+    // ===== MENÚ =====
+    const menuBtn = document.getElementById("menuBtn");
+    const navMenu = document.getElementById("navMenu");
+    const closeBtn = document.getElementById("closeBtn");
+
+    menuBtn.addEventListener("click", () => navMenu.classList.add("active"));
+    closeBtn.addEventListener("click", () => navMenu.classList.remove("active"));
+    document.addEventListener("click", (e) => {
+      if (!navMenu.contains(e.target) && !menuBtn.contains(e.target)) {
+        navMenu.classList.remove("active");
+      }
+    });
+
+    // ===== SLIDER =====
+    let slideIndex = 0;
+    const slides = document.querySelectorAll(".slide");
+    const totalSlides = slides.length;
+    function showSlide(index) {
+      slides.forEach((slide, i) => {
+        slide.style.display = i === index ? "block" : "none";
+      });
+    }
+    function nextSlide() {
+      slideIndex = (slideIndex + 1) % totalSlides;
+      showSlide(slideIndex);
+    }
+    function prevSlide() {
+      slideIndex = (slideIndex - 1 + totalSlides) % totalSlides;
+      showSlide(slideIndex);
+    }
+    showSlide(slideIndex);
+    let slideInterval = setInterval(nextSlide, 10000);
+    document.querySelector(".next").addEventListener("click", () => {
+      nextSlide();
+      clearInterval(slideInterval);
+      slideInterval = setInterval(nextSlide, 10000);
+    });
+    document.querySelector(".prev").addEventListener("click", () => {
+      prevSlide();
+      clearInterval(slideInterval);
+      slideInterval = setInterval(nextSlide, 10000);
+    });
+
+    // ===== CALENDARIO DE NOVIEMBRE 2025 =====
+    const contenedor = document.getElementById("contenedorMeses");
+    const diasSemana = ["Lun.", "Mar.", "Mié.", "Jue.", "Vie.", "Sáb.", "Dom."];
+
+    // 1 de noviembre de 2025 cae en sábado → posición 6 (si lunes es 1)
+    const primerDia = 6; 
+    const totalDias = 30;
+
+    let calendarioHTML = '<div class="calendario">';
+    diasSemana.forEach(d => calendarioHTML += `<div class="dia encabezado">${d}</div>`);
+
+    // Espacios vacíos antes del 1
+    for (let i = 1; i < primerDia; i++) {
+      calendarioHTML += `<div class="dia vacio"></div>`;
+    }
+
+    // Días del mes
+    for (let d = 1; d <= totalDias; d++) {
+      calendarioHTML += `<div class="dia">${d}</div>`;
+    }
+
+    calendarioHTML += '</div>';
+    contenedor.innerHTML = calendarioHTML;
+  </script>
+</body>
+</html>

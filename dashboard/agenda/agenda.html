@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hermandad Jesús del Aposento - Historia</title>
+  <link rel="stylesheet" href="../../index.css">
+  <style>
+    /* ===== GENERAL ===== */
+    
+
+    .menu {
+      color: gold;
+    }
+
+
+
+  
+    /* ===== SECCIÓN IMÁGENES / HISTORIA ===== */
+    .imagenes {
+      text-align: center;
+      padding: 50px 25px;
+      max-width: 950px;
+      margin: auto;
+      animation: fadeIn 1s ease forwards;
+      opacity: 0;
+    }
+
+    .imagenes .titulo {
+      color: gold;
+      font-size: 34px;
+      margin-bottom: 25px;
+      text-shadow: 0 0 15px rgba(255, 215, 0, 0.6);
+      border-bottom: 2px solid gold;
+      display: inline-block;
+      padding-bottom: 10px;
+      text-transform: uppercase;
+      animation: slideDown 1s ease forwards;
+      opacity: 0;
+    }
+
+    .imagenes .descripcion {
+      color: #f0f0f0;
+      line-height: 1.8;
+      text-align: justify;
+      background: linear-gradient(180deg, #111, #000);
+      border: 2px solid gold;
+      border-radius: 20px;
+      padding: 30px;
+      box-shadow: 0 0 35px rgba(255, 215, 0, 0.4);
+      margin-top: 25px;
+      animation: fadeIn 1.5s ease forwards;
+      opacity: 0;
+    }
+
+    .imagenes img {
+      width: 100%;
+      max-width: 650px;
+      border-radius: 20px;
+      border: 3px solid gold;
+      margin-top: 25px;
+      box-shadow: 0 0 40px rgba(255, 215, 0, 0.5);
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+      cursor: pointer;
+      opacity: 0;
+      animation: fadeIn 2s ease forwards;
+    }
+
+    .imagenes img:hover {
+      transform: scale(1.05) rotate(-0.5deg);
+      box-shadow: 0 0 50px rgba(255, 215, 0, 0.7);
+    }
+
+    .diseñogold {
+      width: 100%;
+      height: 6px;
+      background: linear-gradient(to right, transparent, gold, transparent);
+      margin: 50px 0;
+      box-shadow: 0 0 20px gold;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 15px;
+      color: #ccc;
+      font-size: 14px;
+      border-top: 1px solid gold;
+      background-color: #111;
+    }
+
+    /* ===== ANIMACIONES ===== */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(15px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
+      .imagenes .titulo {
+        font-size: 28px;
+      }
+      .imagenes .descripcion {
+        font-size: 15px;
+        padding: 20px;
+      }
+      .imagenes img {
+        width: 95%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <img src="../../assets/escudo.png" alt="Escudo" class="imgEscudo">
+    <div class="menu" id="menuBtn">☰</div>
+
+    <nav class="navMenu" id="navMenu">
+      <div class="closeBtn" id="closeBtn">×</div>
+      <ul>
+        <li><a href="../../index.html">Inicio</a></li>
+        <li><a href="../activities/activities.html">Historia</a></li>
+        <li><a href="#">Imágenes</a></li>
+        <li><a href="../devotos/devotos.html">Devotos</a></li>
+        <li><a href="../iniciar/iniciar.html">Comprar turno</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="imagenes">
+    <h1 class="titulo">Historia de la Hermandad de Jesús del Aposento y Señor Sepultado – Mixco</h1>
+    <p class="descripcion">
+      La Hermandad de Jesús del Aposento y Señor Sepultado tiene sus raíces en la Parroquia de Santo Domingo de Guzmán, ubicada en el centro histórico de Mixco. Esta hermandad es una de las más representativas de la Semana Santa en Mixco y ha sido fundamental en la organización y realización de las procesiones de la Pasión, Muerte y Resurrección de Cristo. <br><br>
+
+      <strong>Jesús del Aposento:</strong><br>
+      La imagen de Jesús del Aposento es venerada en la Parroquia de Santo Domingo de Guzmán. Su procesión se realiza el miércoles santo y es conocida como la Procesión de la Reseña. Esta procesión recorre las principales calles de la zona 1 de Mixco, siendo una de las más esperadas por los fieles devotos. La imagen de Jesús del Aposento es conocida por su porte solemne y su representación de Cristo en el momento de la Última Cena. <br><br>
+      <img src="../../assets/JAposento.jpeg" alt="Jesús del Aposento" class="imgAposento"><br><br>
+
+      <strong>Señor Sepultado:</strong><br>
+      La imagen del Señor Sepultado también es parte importante de esta hermandad. Su procesión se lleva a cabo el viernes santo y es conocida como la Procesión del Santo Entierro. Esta procesión es una de las más antiguas y tradicionales de Mixco, con una gran participación de la comunidad. La imagen del Señor Sepultado es acompañada por la Virgen de la Soledad y otras representaciones de la Pasión de Cristo. <br><br>
+      <img src="../../assets/Ssepultado.jpeg" alt="Señor Sepultado" class="imgSepultado"><br><br>
+
+      <strong>Fundación y Tradición:</strong><br>
+      La hermandad tiene una larga tradición en Mixco, siendo reconocida por su organización y devoción. A lo largo de los años, ha mantenido vivas las tradiciones de la Semana Santa, adaptándose a los tiempos pero sin perder su esencia. La hermandad ha sido fundamental en la preservación de las tradiciones religiosas y culturales de Mixco.
+    </p>
+  </section>
+
+  <div class="diseñogold"></div>
+
+  <footer class="footer">
+    <p>Hermandad Jesús del Aposento © 2025</p>
+  </footer>
+
+  <script>
+    // ===== MENÚ =====
+    const menuBtn = document.getElementById("menuBtn");
+    const navMenu = document.getElementById("navMenu");
+    const closeBtn = document.getElementById("closeBtn");
+
+    menuBtn.addEventListener("click", () => navMenu.classList.add("active"));
+    closeBtn.addEventListener("click", () => navMenu.classList.remove("active"));
+    document.addEventListener("click", (e) => {
+      if (!navMenu.contains(e.target) && !menuBtn.contains(e.target)) {
+        navMenu.classList.remove("active");
+      }
+    });
+  </script>
+</body>
+</html>

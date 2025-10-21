@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hermandad Jesús del Aposento - Comprar Turnos</title>
+  <link rel="stylesheet" href="../../index.css">
+  <style>
+    /* ===== LOGIN DE BIENVENIDA ===== */
+    .comprarTurnos {
+      text-align: center;
+      padding: 60px 20px;
+    }
+
+    .loginBienvenida {
+      background: linear-gradient(180deg, #222, #000);
+      border: 2px solid gold;
+      border-radius: 20px;
+      padding: 40px;
+      display: inline-block;
+      box-shadow: 0 0 25px rgba(255, 215, 0, 0.4);
+    }
+
+    .loginBienvenida h2 {
+      color: gold;
+      margin-bottom: 15px;
+      font-size: 26px;
+    }
+
+    .loginBienvenida p {
+      color: #ccc;
+      margin-bottom: 25px;
+    }
+
+    .btnEntrar {
+      background-color: gold;
+      color: #000;
+      border: none;
+      padding: 10px 25px;
+      border-radius: 25px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.3s;
+      font-weight: 600;
+    }
+
+    .btnEntrar:hover {
+      background-color: #b8860b;
+      transform: scale(1.05);
+    }
+
+    /* ===== OPCIONES DE TURNOS ===== */
+    .opcionesTurnos {
+      display: none;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 40px;
+    }
+
+    .tarjetaTurno {
+      background: linear-gradient(180deg, #1a1a1a, #000);
+      border: 2px solid gold;
+      border-radius: 20px;
+      width: 250px;
+      height: 160px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      color: gold;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+      box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+    }
+
+    .tarjetaTurno:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
+    }
+
+    .footer {
+      text-align: center;
+      padding: 15px;
+      color: #ccc;
+      font-size: 14px;
+      border-top: 1px solid gold;
+      margin-top: 40px;
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <img src="../../assets/escudo.png" alt="Escudo" class="imgEscudo">
+    <div class="menu" id="menuBtn">☰</div>
+
+    <!-- Menú lateral -->
+    <nav class="navMenu" id="navMenu">
+      <div class="closeBtn" id="closeBtn">×</div>
+      <ul>
+        <li><a href="../../index.html">Inicio</a></li>
+        <li><a href="../activities/activities.html">Historia</a></li>
+        <li><a href="../agenda/agenda.html">Imágenes</a></li>
+        <li><a href="../devotos/devotos.html">Devotos</a></li>
+        <li><a href="#">Comprar turno</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="comprarTurnos">
+    <div class="loginBienvenida" id="loginBienvenida">
+      <h2>Bienvenido a la Compra de Turnos Online</h2>
+      <p>Haz clic en el botón para continuar y seleccionar tu turno disponible.</p>
+      <button class="btnEntrar" id="btnEntrar">Entrar</button>
+    </div>
+
+    <div class="opcionesTurnos" id="opcionesTurnos">
+      <div class="tarjetaTurno" onclick="mostrarAlerta('4to Domingo')">4to Domingo</div>
+      <div class="tarjetaTurno" onclick="mostrarAlerta('Miércoles Santo')">Miércoles Santo</div>
+      <div class="tarjetaTurno" onclick="mostrarAlerta('Santo Viacrucis')">Santo Viacrucis</div>
+      <div class="tarjetaTurno" onclick="mostrarAlerta('Santo Entierro')">Santo Entierro</div>
+    </div>
+  </section>
+  <div class="diseñogold"></div>
+  <footer class="footer">
+    <p>Hermandad Jesús del Aposento © 2025</p>
+  </footer>
+
+  <script>
+    // ===== MENÚ =====
+    const menuBtn = document.getElementById("menuBtn");
+    const navMenu = document.getElementById("navMenu");
+    const closeBtn = document.getElementById("closeBtn");
+
+    menuBtn.addEventListener("click", () => navMenu.classList.add("active"));
+    closeBtn.addEventListener("click", () => navMenu.classList.remove("active"));
+    document.addEventListener("click", (e) => {
+      if (!navMenu.contains(e.target) && !menuBtn.contains(e.target)) {
+        navMenu.classList.remove("active");
+      }
+    });
+
+    // ===== LOGIN Y OPCIONES =====
+    const loginBienvenida = document.getElementById('loginBienvenida');
+    const opcionesTurnos = document.getElementById('opcionesTurnos');
+    const btnEntrar = document.getElementById('btnEntrar');
+
+    btnEntrar.addEventListener('click', () => {
+      loginBienvenida.style.display = 'none';
+      opcionesTurnos.style.display = 'flex';
+    });
+
+    // ===== ALERTA AL HACER CLICK =====
+    function mostrarAlerta(turno) {
+      alert(`⚠️ La opción "${turno}" estará muy pronto disponible.`);
+    }
+  </script>
+</body>
+</html>

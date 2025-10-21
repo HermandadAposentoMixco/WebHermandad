@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Devotos</title>
+
+  <!-- Librerías -->
+  <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.1/build/qrcode.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<!-- ======= ESTILOS RESPONSIVE MEJORADOS ======= -->
+<style>
+    :root{
+      --bg:#fafafa; --card:#fff; --accent:#f2b600; --muted:#666;
+      --primary:#111;
+    }
+    *{box-sizing:border-box;}
+    body{font-family:Arial, Helvetica, sans-serif;background:var(--bg);margin:0;padding:16px;color:var(--primary)}
+    .wrap{max-width:1000px;margin:0 auto;}
+    header{background:#111;color:white;padding:14px 18px;border-radius:6px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+    header .logo{width:55px;height:55px;border-radius:6px;background:linear-gradient(135deg,#f2b600,#ffa858);display:flex;align-items:center;justify-content:center;font-weight:700;color:#111}
+    h1{margin:18px 0 8px;font-weight:600;font-size:20px}
+    .grid{display:grid;grid-template-columns:1fr 420px;gap:20px;align-items:start;}
+    .card{background:var(--card);padding:18px;border-radius:8px;box-shadow:0 6px 18px rgba(0,0,0,0.06);}
+    label{display:block;font-size:14px;margin-bottom:6px;color:#222}
+    input, textarea{
+      width:100%;padding:12px;border-radius:6px;border:1px solid #e6e6e9;background:#fff;font-size:15px
+    }
+    .row{display:flex;gap:10px;flex-wrap:wrap}
+    .row > *{flex:1}
+    .btn{display:inline-block;padding:12px 18px;border-radius:6px;border:0;cursor:pointer;background:var(--accent);color:#111;font-weight:700;font-size:15px;transition:0.3s;}
+    .btn:hover{opacity:0.85;}
+    .btn.secondary{background:#6c6f74;color:white}
+    .muted{color:var(--muted);font-size:13px}
+    .center{text-align:center}
+    .form-section{display:none}
+    .visible{display:block}
+  
+    /* PREVIEW / COMPROBANTE */
+    #comprobante{
+      width:100%; max-width:800px; margin:0 auto; background:white; padding:16px; border:1px solid #ddd;
+      font-family: 'Arial'; color:#111;
+    }
+    #comprobante .top{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;border-bottom:1px solid #ddd;padding-bottom:12px;margin-bottom:12px;gap:10px}
+    #comprobante .brand{display:flex;align-items:center;gap:12px}
+    #comprobante .brand .logo{width:60px;height:60px;border-radius:6px;background:linear-gradient(135deg,#f2b600,#e68b00);display:flex;align-items:center;justify-content:center;font-weight:700;color:#111}
+    #comprobante h2{margin:0;font-size:16px}
+    #comprobante .titulo{text-align:center;font-weight:800;font-size:18px;color:#222;margin:8px 0}
+    .registro{display:flex;flex-wrap:wrap;gap:18px;align-items:flex-start}
+    .datos{flex:1;min-width:220px}
+    .datos table{width:100%;border-collapse:collapse}
+    .datos td{padding:6px 4px;font-size:13px;word-break:break-word}
+    .label{width:120px;font-weight:700;color:#333;text-align:left}
+    .cuiGrande{font-size:22px;color:#c62a2a;font-weight:800;text-align:center;margin-bottom:6px}
+    .qrBox{width:100%;max-width:200px;text-align:center;margin:auto}
+    .nota{font-size:12px;color:#444;margin-top:12px;line-height:1.2}
+    footer.note{margin-top:18px;font-size:12px;color:#333}
+  
+    /* Responsive mejorado */
+    @media(max-width:980px){
+      .grid{grid-template-columns:1fr;}
+      .row{flex-direction:column;}
+      .btn{width:100%;text-align:center;}
+      #comprobante .top{flex-direction:column;align-items:flex-start;}
+      .qrBox{max-width:160px;}
+    }
+
+    /* ===== BOTONES DE SEXO ===== */
+    .sexo-group {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 12px;
+  margin-top: 10px;
+  width: 100%;
+}
+
+.sexo-group label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: 1.5px solid #ccc;
+  background: #fff;
+  color: #333;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.sexo-group label:hover {
+  background: #f2f2f2;
+}
+
+.sexo-group input[type="radio"] {
+  display: none;
+}
+
+.sexo-group input[type="radio"]:checked + span {
+  background: #e0e0e0;  /* gris claro */
+  border-color: #999;
+  color: #000;
+}
+
+.sexo-group label span {
+  width: 100%;
+  text-align: center;
+  border-radius: 6px;
+  padding: 6px 0;
+  transition: all 0.2s ease;
+}
+
+/* ===== BOTÓN “No soy de Guatemala” MEJORADO ===== */
+#noGuate {
+  display: none; /* ocultamos el checkbox real */
+}
+
+#noGuate + span {
+  display: inline-block;
+  padding: 8px 14px;
+  border-radius: 6px;
+  background: #6c6f74;
+  color: white;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: 0.3s;
+  user-select: none;
+}
+
+#noGuate:checked + span {
+  background: #f2b600;
+  color: #111;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+}
+
+
+  
+    /* QR para móviles centrado y más grande */
+    #previewQr{width:100%;max-width:220px;height:auto;border:1px solid #eee;padding:10px;background:white;}
+    #qrComprobante{width:100%;max-width:200px;height:auto;border:1px solid #ddd;padding:6px;background:white;}
+  </style>
+  
+</head>
+<body>
+  <div class="wrap">
+    <header style="display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;">
+        <div style="display:flex;align-items:center;gap:14px;">
+          <img src="../../assets/escudo.png" alt="" class="logo">
+      
+          <div>
+            <div style="font-weight:700">Plataforma - Confirmación de información de devoto</div>
+            <div style="font-size:12px;color:#cfcfcf">Sistema de actualización / comprobante con QR</div>
+          </div>
+        </div>
+      
+        <!-- Botón para regresar -->
+        <button onclick="window.location.href='../../index.html'" 
+        class="btn secondary" 
+        style="padding:8px 12px; font-size:14px;">
+  Regresar a principal
+</button>
+
+      </header>
+      
+
+    <div style="height:18px"></div>
+
+    <div class="grid">
+      <!-- Columna izquierda: Instrucciones / Formulario -->
+      <div>
+        <!-- STEP 1 -->
+        <div id="step1" class="card visible">
+          <h1>CONFIRMACIÓN DE INFORMACIÓN DE DEVOTO</h1>
+          <div class="instructions muted">
+            <p><strong>Instrucciones</strong></p>
+            <ul>
+              <li>Ingrese los 13 dígitos de su número de DPI o CUI (sin espacios ni guiones) y haga clic en <strong>CONSULTAR INFORMACIÓN</strong>.</li>
+              <li>Si ya está registrado, revise los datos que aparecen. Podrá modificarlos o completarlos.</li>
+              <li>Si no se muestran resultados, complete el formulario que se desplegará.</li>
+            </ul>
+          </div>
+
+          <div style="height:10px"></div>
+
+          <div>
+            <label>
+                <input type="checkbox" id="noGuate" />
+                <span>No soy de Guatemala</span>
+              </label>              
+            <label style="margin-top:10px">Documento de Identificación <span style="color:#c62a2a">*</span>      <br>(CUI sin espacios ni guiones)</label>
+            <input id="cuiInput" type="text" placeholder="Ingresa su CUI" inputmode="numeric" maxlength="13">
+            <div style="height:12px"></div>
+            <div style="display:flex;justify-content:space-between;align-items:center">
+              <div class="muted">Los campos marcados con asterisco son obligatorios.</div>
+              <div>
+                <button id="consultBtn" class="btn">CONSULTAR INFORMACIÓN</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- STEP 2: Formulario completo -->
+        <div id="step2" class="card form-section">
+          <h1>Registro / Actualización de Devoto</h1>
+
+          <form id="devotoForm">
+            <div class="row">
+              <div>
+                <label>Nombres *</label>
+                <input id="nombres" type="text" required placeholder="">
+              </div>
+              <div>
+                <label>Apellidos *</label>
+                <input id="apellidos" type="text" required placeholder="">
+              </div>
+            </div>
+
+            <div style="height:8px"></div>
+
+            <div class="row">
+              <div>
+                <label>CUI / DPI *</label>
+                <input id="cuiForm" type="text" readonly>
+              </div>
+              <div>
+                <label>Número de teléfono</label>
+                <input id="telefono" type="tel" placeholder="">
+              </div>
+            </div>
+            <!-- Dentro de devotoForm, después de teléfono -->
+<div>
+  <label>Correo electrónico</label>
+  <input id="correo" type="email" placeholder="ejemplo@correo.com">
+</div>
+
+
+            <div style="height:8px"></div>
+
+            <div>
+                <label>Sexo</label>
+                <div class="sexo-group">
+                  <label>
+                    <input type="radio" name="sexo" value="masculino">
+                    <span>Masculino</span>
+                  </label>
+                
+                  <label>
+                    <input type="radio" name="sexo" value="femenino">
+                    <span>Femenino</span>
+                  </label>
+                </div>
+                
+              </div>
+              
+
+            <div style="height:8px"></div>
+
+            <div>
+              <label>Dirección</label>
+              <input id="direccion" type="text" placeholder="Ciudad, Calle, etc.">
+            </div>
+
+            <div style="height:8px"></div>
+
+            <div>
+              <label>Fecha de nacimiento</label>
+              <input id="fn" type="date">
+            </div>
+
+            <div style="height:8px"></div>
+
+            <div>
+              <label>Hermandad Jesus del Aposento y Señor Sepultado</label>
+              <textarea id="nota" rows="3" placeholder="Observaciones..."></textarea>
+            </div>
+
+            <div style="height:12px"></div>
+
+            <div style="display:flex;gap:8px;justify-content:flex-end">
+              <button type="button" id="backBtn" class="btn secondary">Volver</button>
+              <button type="submit" class="btn">Generar comprobante (PDF)</button>
+            </div>
+          </form>
+        </div>
+
+      </div>
+
+      <!-- Columna derecha: preview QR + instrucciones -->
+      <div>
+        <div class="card center">
+          <h3>Vista previa / QR</h3>
+          <div style="height:8px"></div>
+          <img id="previewQr" src="" alt="QR" style="width:220px;height:220px;border:1px solid #eee;padding:10px;background:white">
+          <div style="height:8px"></div>
+          <div id="previewText" class="muted">Aquí se mostrará el contenido del QR cuando generes el comprobante.</div>
+          <div style="height:12px"></div>
+          <div style="display:flex;gap:6px;justify-content:center">
+            <button id="downloadQrBtn" class="btn secondary" style="padding:8px 10px">Descargar QR</button>
+          </div>
+        </div>
+
+        <div style="height:18px"></div>
+
+        <div class="card muted">
+          <p><strong>Notas:</strong></p>
+          <ol>
+            <li>Si ya posee su Carnet de Hermano Cargador no es necesario presentar la contraseña generada.</li>
+            <li>Si no cuenta con el carnet, deberá presentar este comprobante (digital o impreso) al inscribirse.</li>
+            <li>La contraseña en el comprobante agiliza su proceso de inscripción.</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+
+    <!-- AREA oculta que será renderizada como comprobante para PDF -->
+    <div id="comprobanteContainer" style="display:none; padding-top:18px;">
+      <div id="comprobante">
+        <div class="top">
+          <div class="brand">
+            <div class="logo">G</div>
+            <div>
+              <div style="font-weight:700;color:#b8860b">HERMANDAD del SEÑOR SEPULTADO</div>
+              <div style="font-size:12px;color:#777">Identificación Devoto</div>
+            </div>
+          </div>
+          <div style="text-align:right">
+            <div style="font-size:12px;color:#777">DOCUMENTO</div>
+            <div id="fechaComprobante" style="font-weight:700"></div>
+          </div>
+        </div>
+
+        <div class="titulo">REGISTRO DEVOTO</div>
+        <div class="cuiGrande" id="cuiGrande">3059567870301</div>
+
+        <div class="registro">
+          <div class="datos">
+            <table>
+              <tr><td class="label">CUI</td><td class="value" id="tdCui"></td></tr>
+              <tr><td class="label">Nombres</td><td class="value" id="tdNombres"></td></tr>
+              <tr><td class="label">Apellidos</td><td class="value" id="tdApellidos"></td></tr>
+              <tr><td class="label">Fecha Nacimiento</td><td class="value" id="tdFn"></td></tr>
+              <tr><td class="label">Teléfono</td><td class="value" id="tdTel"></td></tr>
+              <tr><td class="label">Correo</td><td class="value" id="tdCorreo"></td></tr>
+
+              <tr><td class="label">Dirección</td><td class="value" id="tdDir"></td></tr>
+            </table>
+          </div>
+
+          <div class="qrBox">
+            <img id="qrComprobante" src="" alt="QR" style="width:160px;height:160px;border:1px solid #ddd;padding:6px;background:white">
+            <div style="height:8px"></div>
+            <div><strong>Contraseña:</strong> <span id="contraseñaPdf" style="font-weight:700"></span></div>
+          </div>
+        </div>
+
+        <footer class="note">
+          <strong>NOTAS:</strong>
+          <ul>
+            <li>Si ya posee su Carnet de Hermano Cargador, no es necesario presentar la contraseña generada.</li>
+            <li>Si no cuenta con el carnet, deberá presentar este comprobante (digital o impreso) al momento de su inscripción, asegurándose que el código QR sea claramente visible.</li>
+            <li>Esta contraseña le permitirá agilizar su proceso de inscripción.</li>
+          </ul>
+        </footer>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    // Módulos jsPDF
+    const { jsPDF } = window.jspdf;
+
+    // Simulamos una "base de datos" local con un registro (como en tu imagen)
+    const DB = {
+      "3059567870301": {
+        nombres: "",
+        apellidos: "",
+        fn: "",
+        telefono: "+502 1234 5678",
+        direccion: "Mixco, Guatemala",
+        sexo: "Hombre"
+      }
+      // Puedes agregar más registros aquí si quieres
+    };
+
+    // Elementos
+    const step1 = document.getElementById('step1');
+    const step2 = document.getElementById('step2');
+    const consultBtn = document.getElementById('consultBtn');
+    const backBtn = document.getElementById('backBtn');
+    const cuiInput = document.getElementById('cuiInput');
+    const noGuate = document.getElementById('noGuate');
+
+    // Form
+    const devotoForm = document.getElementById('devotoForm');
+    const nombresEl = document.getElementById('nombres');
+    const apellidosEl = document.getElementById('apellidos');
+    const cuiForm = document.getElementById('cuiForm');
+    const telefonoEl = document.getElementById('telefono');
+    const direccionEl = document.getElementById('direccion');
+    const fnEl = document.getElementById('fn');
+    const notaEl = document.getElementById('nota');
+
+    // Preview / QR
+    const previewQr = document.getElementById('previewQr');
+    const previewText = document.getElementById('previewText');
+    const downloadQrBtn = document.getElementById('downloadQrBtn');
+
+    // Comprobante DOM
+    const comprobanteContainer = document.getElementById('comprobanteContainer');
+    const tdCui = document.getElementById('tdCui');
+    const tdNombres = document.getElementById('tdNombres');
+    const tdApellidos = document.getElementById('tdApellidos');
+    const tdFn = document.getElementById('tdFn');
+    const tdTel = document.getElementById('tdTel');
+    const correoEl = document.getElementById('correo');
+const tdCorreo = document.getElementById('tdCorreo');
+    const tdDir = document.getElementById('tdDir');
+    const cuiGrande = document.getElementById('cuiGrande');
+    const qrComprobante = document.getElementById('qrComprobante');
+    const contraseñaPdf = document.getElementById('contraseñaPdf');
+    const fechaComprobante = document.getElementById('fechaComprobante');
+
+    // Utilidades
+    function onlyDigits(s){ return s.replace(/\D/g,''); }
+    function randomPassword(len=6){
+      const chars = 'ABCDEFGHJKMNPQRSTUVWXYZ23456789';
+      let out = '';
+      for(let i=0;i<len;i++) out += chars.charAt(Math.floor(Math.random()*chars.length));
+      return out;
+    }
+
+    // Evento: CONSULTAR INFORMACIÓN
+    consultBtn.addEventListener('click', ()=>{
+      const cui = onlyDigits(cuiInput.value).trim();
+      if(!cui){
+        alert('Ingrese su número de CUI/DPI.');
+        return;
+      }
+      if(!noGuate.checked && cui.length !== 13){
+        alert('El CUI debe tener 13 dígitos (sin espacios ni guiones). Si no es de Guatemala, marque la casilla correspondiente.');
+        return;
+      }
+
+      // Mostrar formulario (step2), rellenar si existe en DB
+      cuiForm.value = cui;
+      if(DB[cui]){
+        const d = DB[cui];
+        nombresEl.value = d.nombres;
+        apellidosEl.value = d.apellidos;
+        telefonoEl.value = d.telefono || '';
+        direccionEl.value = d.direccion || '';
+        fnEl.value = d.fn || '';
+        // marcar sexo
+        const sexos = document.getElementsByName('sexo');
+        for(let r of sexos) if(r.value === d.sexo) r.checked = true;
+      } else {
+        // Formulario vacío para completar
+        nombresEl.value = '';
+        apellidosEl.value = '';
+        telefonoEl.value = '';
+        direccionEl.value = '';
+        fnEl.value = '';
+        notaEl.value = '';
+        const sexos = document.getElementsByName('sexo');
+        sexos[0].checked = true;
+      }
+
+      step1.classList.remove('visible');
+      step1.classList.add('form-section');
+      step2.classList.add('visible');
+      step2.classList.remove('form-section');
+      // limpiar vista preview
+      previewQr.src = '';
+      previewText.textContent = 'Aquí se mostrará el contenido del QR cuando generes el comprobante.';
+    });
+
+    backBtn.addEventListener('click', ()=>{
+      step2.classList.remove('visible');
+      step2.classList.add('form-section');
+      step1.classList.add('visible');
+      step1.classList.remove('form-section');
+    });
+
+    // Submit form -> generar comprobante y PDF
+    devotoForm.addEventListener('submit', async (e)=>{
+      e.preventDefault();
+      const data={
+  cui: onlyDigits(cuiForm.value),
+  nombres: nombresEl.value.trim(),
+  apellidos: apellidosEl.value.trim(),
+  telefono: telefonoEl.value.trim(),
+  correo: correoEl.value.trim(),
+  direccion: direccionEl.value.trim(),
+  fn: fnEl.value,
+  nota: notaEl.value.trim(),
+  sexo: (document.querySelector('input[name="sexo"]:checked')||{}).value||''
+};
+
+      if(!data.nombres || !data.apellidos || !data.cui){
+        alert('Complete los campos obligatorios: nombres, apellidos y CUI/DPI.');
+        return;
+      }
+
+      // preparar comprobante DOM con valores
+      tdCui.textContent = data.cui;
+      tdNombres.textContent = data.nombres;
+      tdApellidos.textContent = data.apellidos;
+      tdFn.textContent = data.fn || '-';
+      tdTel.textContent = data.telefono || '-';
+      tdCorreo.textContent = data.correo || '-';
+      tdDir.textContent = data.direccion || '-';
+      cuiGrande.textContent = data.cui;
+      fechaComprobante.textContent = new Date().toLocaleDateString();
+
+      // crear contraseña aleatoria
+      const pass = randomPassword(6);
+      contraseñaPdf.textContent = pass;
+
+      // crear contenido de QR (texto legible; puedes cambiar a JSON si quieres)
+      const qrContent = [
+  `CUI: ${data.cui}`,
+  `Nombres: ${data.nombres}`,
+  `Apellidos: ${data.apellidos}`,
+  `Fecha nacimiento: ${data.fn || '-'}`,
+  `Teléfono: ${data.telefono || '-'}`,
+  `Correo: ${data.correo || '-'}`,
+  `Dirección: ${data.direccion || '-'}`,
+  `Sexo: ${data.sexo || '-'}`,
+  `Contraseña: ${pass}`
+].join('\n');
+
+      // generar QR (DataURL)
+      try{
+        const opts = {width: 400, margin: 1};
+        const dataUrl = await QRCode.toDataURL(qrContent, opts);
+        qrComprobante.src = dataUrl;
+        previewQr.src = dataUrl;
+        previewText.textContent = qrContent;
+      }catch(err){
+        console.error('Error generando QR', err);
+        alert('No se pudo generar el QR.');
+        return;
+      }
+
+      // mostrar la vista comprobante oculta para renderizar
+      comprobanteContainer.style.display = 'block';
+      // esperar un tic para que la imagen QR se renderice
+      setTimeout(async () => {
+  const el = document.getElementById('comprobante');
+  await new Promise(r => setTimeout(r, 800)); // tiempo de espera extra
+
+  const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+  const scaleValue = isSafari ? 2 : 3; // Safari no soporta bien escalas altas
+
+  const canvas = await html2canvas(el, {
+    scale: scaleValue,
+    useCORS: true,
+    backgroundColor: '#ffffff',
+    windowWidth: el.scrollWidth,
+    windowHeight: el.scrollHeight
+  });
+
+  const imgData = canvas.toDataURL('image/jpeg', 1.0);
+  const pdf = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
+
+  const pdfWidth = pdf.internal.pageSize.getWidth();
+  const pdfHeight = pdf.internal.pageSize.getHeight();
+
+  const imgProps = pdf.getImageProperties(imgData);
+  const imgWidth = pdfWidth - 20;
+  const imgHeight = (imgProps.height * imgWidth) / imgProps.width;
+
+  const finalHeight = imgHeight > pdfHeight - 20 ? pdfHeight - 20 : imgHeight;
+  const finalWidth = (imgProps.width * finalHeight) / imgProps.height;
+
+  const x = (pdfWidth - finalWidth) / 2;
+  const y = (pdfHeight - finalHeight) / 2;
+
+  pdf.addImage(imgData, 'JPEG', x, y, finalWidth, finalHeight);
+
+  const filename = `comprobanteDevoto_${data.cui}.pdf`;
+
+  // Manejo de descarga seguro para Safari
+  const blob = pdf.output('blob');
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = filename;
+
+  // En Safari, forzamos la apertura en una nueva pestaña
+  if (isSafari) {
+    window.open(url, '_blank');
+  } else {
+    link.click();
+  }
+
+  setTimeout(() => {
+    URL.revokeObjectURL(url);
+  }, 2000);
+
+  alert('✅ PDF generado correctamente (compatible con Safari y móvil).');
+}, 600);
+
+    });
+
+    // Botón descargar QR robusto para móviles
+downloadQrBtn.addEventListener('click', async ()=>{
+  if(!previewQr.src){
+    alert('No hay QR generado aún. Complete el formulario y genere el comprobante.');
+    return;
+  }
+  try {
+    const blob = await fetch(previewQr.src).then(r => r.blob());
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `qr_${cuiForm.value || 'devoto'}.png`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  } catch(e){
+    console.error(e);
+    alert('Error al descargar el QR en este dispositivo.');
+  }
+});
+
+
+  </script>
+</body>
+</html>
